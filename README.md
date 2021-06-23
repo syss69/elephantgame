@@ -1,7 +1,7 @@
 # React Coding Challenge
 
 ## Introduction
-This project is an bare-bones React/Typescript template. Candidates who are invited to solve the coding challenge are required to fork this repository and implement any components/hooks/modules/tests they deem necessary for a good design. Once implemented, candidates are expected to share their repositories for internal review at Emerson.
+This project is a bare-bones React/Typescript template. Candidates who are invited to solve the coding challenge are required to fork this repository and implement any components/hooks/modules/tests they deem necessary for a good design. This challenge is confidential and candidates should keep forked repositories private. Once implemented, candidates are expected to provide private access to their interviewer for code review.
 
 ## Challenge Description
 
@@ -10,15 +10,20 @@ The challenge consists in implementing a mini memory game in React and Typescrip
 -	The landing page should display a grid (4x4) of cards initially laid face down. 
 -	Each card hides an image that can be revealed by clicking on the card.
 -	The grid has unique pairs of distinct images (8 pairs for a 4x4 grid).
--	Images should display avatars provided by dicebear package https://github.com/dicebear/dicebear
+-	Images should display avatars provided by [dicebear http API](https://avatars.dicebear.com/docs/http-api). 
+
+    Example:
+    ``` html
+    <img src="https://avatars.dicebear.com/api/bottts/seed-9.svg" height="auto" width={96} alt="Avatar" />
+    ```
 -	A countdown timer (30 seconds) is displayed on top of the grid and starts when the first card is revealed.
 -	When a user reveals two cards, two outcomes are possible: 
     -   If both card images match, they remain revealed for the rest of the game.
     -   Otherwise, these two cards are turned face down again 0.5 second after the second card was revealed.
 -	The game ends when the last pair is revealed or when the time runs out.
--	The remaining seconds is considered to be the user score and should be displayed at the end in a dialog with a “play again” button.
--	Optional: Add a "restarts" button for resetting both the grid and the timer.
--	Optional: Add a dialog accessible from a settings button to configure the grid size and the timer value.
+-	The remaining seconds is considered to be the user score and should be displayed at the end with a “Play again” button.
+-	Optional: Add a "Restart" button for resetting both the grid and the timer at any time during the game.
+-	Optional: Make the grid size and the timer value configurable from the UI.
 
 Candidates are encouraged to share their thoughts around any design decisions they make while coding their solution.
 
