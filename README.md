@@ -1,7 +1,7 @@
 # React Coding Challenge
 
 ## Introduction
-This project is a bare-bones React/Typescript template. Candidates who are invited to solve the coding challenge are required to fork this repository and implement any components/hooks/modules/tests they deem necessary for a good design. This challenge is confidential and candidates should keep forked repositories private. Once implemented, candidates are expected to provide private access to their interviewer(s) for code review.
+This project is a bare-bones React/Typescript template. Candidates who are invited to solve the coding challenge are required to clone this repository and implement any components/hooks/modules/tests they deem necessary for a good design. This challenge is confidential and candidates should keep cloned repositories private. Once implemented, candidates are expected to provide private access to their interviewer(s) for code review.
 
 ## Challenge Description
 
