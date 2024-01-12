@@ -4,6 +4,6 @@ import App from './App';
 
 test('renders learn react link', () => {
   render(<App />);
-  const header = screen.getByRole("heading", {level: 1})
-  expect(header).toBeInTheDocument();
+  const title = screen.getByRole("title")
+  expect(title).toBeInTheDocument(<p role="title">Elephant game</p>);
 });
