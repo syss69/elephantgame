@@ -5,8 +5,8 @@ function App() {
   return (
     <div className="App">
       <header role="heading" aria-level={1} className="App-header">
-        <p>
-          Emerson React Coding Challenge
+        <p role="title">
+          Elephant game
         </p>
       </header>
       <div>
