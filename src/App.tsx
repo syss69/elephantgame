@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.css";
+import Card from "./Card";
 
 function App() {
   return (
@@ -13,26 +14,26 @@ function App() {
         <br/>
         <br/>
       </div>
-      <div>
-        <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Ginger" height="auto" width={150} alt="Smile" id='smile' />
-        <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Ginger" height="auto" width={150} alt="Smile" id='smile' />
-        <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Cleo" height="auto" width={150} alt="Star Eyes" id='stars' />
-        <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Cleo" height="auto" width={150} alt="Star Eyes" id='stars' />
+      <div className= "App-cardContainer">
+        <Card imageSrc="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Ginger" index={1} state={false}/>
+        <Card imageSrc="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Ginger" index={2} state={false}/>
+        <Card imageSrc="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Cleo" index={3} state={false}/>
+        <Card imageSrc="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Cleo"  index={4} state={false}/>
         <br />
-        <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Mittens" height="auto" width={150} alt="Sunglasses" id="sunglasses" />
-        <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Mittens" height="auto" width={150} alt="Sunglasses" id="sunglasses" />
-        <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Charlie" height="auto" width={150} alt="Sad Face" id="sadFAce" />
-        <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Charlie" height="auto" width={150} alt="Sad Face" id="sadFace" />
+        <Card imageSrc="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Mittens" index={5} state={false}/>
+        <Card imageSrc="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Mittens" index={6} state={false}/>
+        <Card imageSrc="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Charlie"  index={7} state={false}/>
+        <Card imageSrc="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Charlie" index={8}  state={false}/>
         <br />
-        <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Lucy" height="auto" width={150} alt="Eal" id="eal" />
-        <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Lucy" height="auto" width={150} alt="Eal" id="eal" />
-        <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Rascal" height="auto" width={150} alt="Wink" id="wink" />
-        <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Rascal" height="auto" width={150} alt="Wink" id="wink" />
+        <Card imageSrc="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Lucy" index={9} state={false}/>
+        <Card imageSrc="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Lucy"   index={10} state={false}/>
+        <Card imageSrc="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Rascal"  index={11} state={false}/>
+        <Card imageSrc="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Rascal"  index={12} state={false}/>
         <br />
-        <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Snowball" height="auto" width={150} alt="Kiss" id="Kiss" />
-        <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Snowball" height="auto" width={150} alt="Kiss" id="Kiss" />
-        <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Jack" height="auto" width={150} alt="Angry" id="Angry" />
-        <img src="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Jack" height="auto" width={150} alt="Angry" id="Angry" />
+        <Card imageSrc="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Snowball" index={13}  state={false}/>
+        <Card imageSrc="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Snowball"  index={14} state={false}/>
+        <Card imageSrc="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Jack" index={15} state={false}/>
+        <Card imageSrc="https://api.dicebear.com/7.x/fun-emoji/svg?seed=Jack" index={16} state={false}/>
       </div>
     </div>
   );

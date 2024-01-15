@@ -13,6 +13,10 @@
   color: aqua;
 }
 
-  .App-img {
-    border:5px solid black
+  img {
+    border:5px solid black;
+    margin: 1rem;
+    backface-visibility: visible;
+    
 }
+
