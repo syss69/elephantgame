@@ -1,5 +1,3 @@
-import { prependOnceListener } from "process";
-import { useState } from "react";
 
 export interface ICardProps {
     state: boolean;
@@ -8,11 +6,12 @@ export interface ICardProps {
     onClick: (index:number) => void;
 }
 
+export const backFace = "https://api.dicebear.com/7.x/shapes/svg?seed=Harley";
+
 const Card = (props: ICardProps) => {
-    const [status, setStatus] = useState(false)
-    const {imageSrc, index} = props;
-    let src = status === false? "https://api.dicebear.com/7.x/shapes/svg?seed=Harley":imageSrc;
-    return <img src ={src}  height="auto" width={150} alt={'image_${index}'} id={'image_${index}'} onClick={() =>{setStatus((prev) => !prev)}}/>;
+    const {state, imageSrc, index, onClick} = props;
+    let src = state === false? backFace:imageSrc;
+    return <img src ={src}  height="auto" width={150} alt={`image_${index}`} id={`image_${index}`} onClick={() =>onClick(index)}/>;
 }
 
 export default Card;
