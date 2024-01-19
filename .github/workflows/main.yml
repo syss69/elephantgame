@@ -21,7 +21,8 @@ jobs:
             - name: Install dependencies
               run: npm install
       
-            - name: Start and test
+            - name: Build and test
               run: |
                 npm run build
+                npm rin test
 
