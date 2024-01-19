@@ -57,7 +57,7 @@ function App() {
 
   const clickCount = () => {
     setClicks(clicks + 1);
-    console.log('You click', clicks, 'times')
+    console.log('You clicked', clicks, 'times')
   }
  
   const matchCount = () => {

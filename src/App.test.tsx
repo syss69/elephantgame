@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, } from '@testing-library/react';
 import React from 'react';
 import App from './App';
 import Card, { ICardProps, backFace } from './Card';
@@ -11,6 +11,7 @@ const cardProps:ICardProps = {
   index: 1,
   onClick: jest.fn()
 }
+
 
 test('To have a title', () => {
   render(<App />);
@@ -64,3 +65,28 @@ test('image change on new game', async() => {
   const secondSrc = myImg.src;
   expect(firstSrc).not.toBe(secondSrc);
 })
+
+test('paires stay flipped', async() => {
+  render (<App/>);
+  const myImg = screen.getByRole("img", { name: /image_0/i });
+  const myImg1 = screen.getByRole("img", { name: /image_3/i });
+  const startButton = screen.getByRole("button", { name: /new game/i });
+
+  await userEvent.click(myImg);
+  let firstSrc = myImg.src;
+  await userEvent.click(myImg1);
+  let secondSrc = myImg1.src;
+  if(firstSrc !== secondSrc) { //if it is not a pair, we start a loop while
+    while(firstSrc !== secondSrc){
+      await userEvent.click(startButton);
+      await userEvent.click(myImg);
+      firstSrc = myImg.src;
+      await userEvent.click(myImg1);
+      secondSrc = myImg1.src;
+      }
+  }
+  setTimeout(() => {
+    expect(firstSrc).toBe(secondSrc); //expect that after 0,7 seconds image source will be same. (cards flipping after 0,5 seconds if it is not a pair)
+  }, 700);
+});
+ 
