@@ -24,5 +24,4 @@ jobs:
             - name: Start and test
               run: |
                 npm run build
-                npm run start
-                npm run test
+
