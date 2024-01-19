@@ -25,6 +25,11 @@ function App() {
                       "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Snowball",
                       "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Jack"
                     ]);
+  const [callCount, setCallCount] = useState(0);
+  const [clicks, setClicks] = useState(1);
+
+
+
   const buildCard = (index: number, imageSrc: string) => {
     return <Card imageSrc={imageSrc} index={index} state={cardState[index]} onClick={onCardClick}/>
   }
@@ -50,7 +55,23 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // executes on 'mount' []); // executes on 'mount'
 
+  const clickCount = () => {
+    setClicks(clicks + 1);
+    console.log('You click', clicks, 'times')
+  }
+ 
+  const matchCount = () => {
+    if (callCount <= 7) {
+      setCallCount(callCount + 1);
+      console.log('Match!', callCount+1);
+    }
+    if (callCount === 7) {
+      alert("You win!");
+    }
+  };
 
+
+  
   const flipCard = (index: number, state:boolean) => {
     setCardState((cardState) => {
       const newState = [...cardState];
@@ -59,19 +80,26 @@ function App() {
     })
   }
 
-    
+
   const onCardClick = (index: number) => {
-      console.log(`Card ${index} was clicked`);
+      clickCount();
       const newState = !cardState[index];
       flipCard(index, newState);
 
       if (newState === true && lastCardIndex !== -1 && lastCardIndex !== index) {
-        setTimeout(() => {
-          flipCard(lastCardIndex, false);
-          flipCard(index, false);
-          setLastCardIndex(-1);
-        }, 500);
-      }
+        const sameImages = cardImages[lastCardIndex] === cardImages[index];
+            setTimeout(() => {
+              if (!sameImages) {
+                flipCard(lastCardIndex, false);
+                flipCard(index, false); 
+              }
+              else{
+                matchCount();
+              }           
+              setLastCardIndex(-1);
+          }, 500);
+    }
+      
       setLastCardIndex(index);
     }
     
