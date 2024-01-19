@@ -24,5 +24,6 @@ jobs:
             - name: Start and test
               run: |
                 npm run build
+                nvm use 16.0
                 npm run start
                 npm run test
