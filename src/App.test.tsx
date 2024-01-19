@@ -58,8 +58,9 @@ test('image change on new game', async() => {
   const myImg = screen.getByRole("img", { name: /image_0/i });
   const startButton = screen.getByRole("button", { name: /new game/i });
   await userEvent.click(myImg);
-  const firstSrc = myImg.src
-  await userEvent.click(startButton)
-  const secondSrc = myImg.src
-  expect(firstSrc).not.toBe(secondSrc)
+  const firstSrc = myImg.src;
+  await userEvent.click(startButton);
+  await userEvent.click(myImg);
+  const secondSrc = myImg.src;
+  expect(firstSrc).not.toBe(secondSrc);
 })
