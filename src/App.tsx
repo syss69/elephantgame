@@ -1,37 +1,50 @@
 import React, {useState, useEffect} from "react";
 import "./App.css";
-import Card from "./Card";
+import Card, {Image} from "./Card";
+
+
+
+const images = [
+  {src:"https://api.dicebear.com/7.x/fun-emoji/svg?seed=Ginger", id:0},
+  {src:"https://api.dicebear.com/7.x/fun-emoji/svg?seed=Cleo", id:1},
+  {src:"https://api.dicebear.com/7.x/fun-emoji/svg?seed=Mittens", id:2},
+  {src:"https://api.dicebear.com/7.x/fun-emoji/svg?seed=Charlie", id:3},
+  {src:"https://api.dicebear.com/7.x/fun-emoji/svg?seed=Lucy", id:4},
+  {src:"https://api.dicebear.com/7.x/fun-emoji/svg?seed=Rascal", id:5},
+  {src:"https://api.dicebear.com/7.x/fun-emoji/svg?seed=Snowball", id:6},
+  {src:"https://api.dicebear.com/7.x/fun-emoji/svg?seed=Jack", id:7},
+]
 
 
 function App() {
 
   const [cardState, setCardState] = useState([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]);
   const [lastCardIndex, setLastCardIndex] = useState(-1);
-  const [cardImages, setCardImages] = useState([
-                      "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Ginger",
-                      "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Cleo",
-                      "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Mittens",
-                      "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Charlie",
-                      "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Lucy",
-                      "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Rascal",
-                      "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Snowball",
-                      "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Jack",
-                      "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Ginger",
-                      "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Cleo",
-                      "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Mittens",
-                      "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Charlie",
-                      "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Lucy",
-                      "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Rascal",
-                      "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Snowball",
-                      "https://api.dicebear.com/7.x/fun-emoji/svg?seed=Jack"
-                    ]);
+  const [cardImages, setCardImages] = useState<Image[]>([
+    images[0],
+    images[1],
+    images[2],
+    images[3],
+    images[4],
+    images[5],
+    images[6],
+    images[7],
+    images[0],
+    images[1],
+    images[2],
+    images[3],
+    images[4],
+    images[5],
+    images[6],
+    images[7],
+  ]);
   const [callCount, setCallCount] = useState(0);
-  const [clicks, setClicks] = useState(1);
+  const [clicks, setClicks] = useState(1);  //clicks can't be more then 2, i use it to avoid click on 3rd card
+  const [clicks1, setClicks1] = useState(1);  // clicks1 used to count how many clicks do user for game
 
 
-
-  const buildCard = (index: number, imageSrc: string) => {
-    return <Card imageSrc={imageSrc} index={index} state={cardState[index]} onClick={onCardClick}/>
+  const buildCard = (index: number, image: Image) => {
+    return <Card image={image} index={index} state={cardState[index]} onClick={onCardClick}/>
   }
   
   const shuffleArray = () => {
@@ -53,13 +66,17 @@ function App() {
   useEffect(() => {
     shuffleArray();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // executes on 'mount' []); // executes on 'mount'
+  }, []); // executes on 'mount'
 
-  const clickCount = () => {
+  const incrementingClick = () => { //i use clicks to avoid click on 3rd card
     setClicks(clicks + 1);
-    console.log('You clicked', clicks, 'times')
   }
  
+  const incrementingClick1 = () => {
+    setClicks1(clicks1 + 1);
+    console.log('You clicked', clicks1, 'times') // i use clicks1 to count how many clicks do user for game
+  }
+
   const matchCount = () => {
     if (callCount <= 7) {
       setCallCount(callCount + 1);
@@ -70,7 +87,9 @@ function App() {
     }
   };
 
-
+  const setFalse = () => {
+    setCardState([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]);
+  }
   
   const flipCard = (index: number, state:boolean) => {
     setCardState((cardState) => {
@@ -82,7 +101,9 @@ function App() {
 
 
   const onCardClick = (index: number) => {
-      clickCount();
+    if (cardState[index] !== true && clicks < 3){
+      incrementingClick();
+      incrementingClick1();
       const newState = !cardState[index];
       flipCard(index, newState);
 
@@ -97,11 +118,14 @@ function App() {
                 matchCount();
               }           
               setLastCardIndex(-1);
+              setClicks(1);
           }, 500);
     }
       
       setLastCardIndex(index);
     }
+    }
+      
     
     return (
       <div className="App">
@@ -112,7 +136,7 @@ function App() {
         </header>
         <div>
           <br/>
-          <button type="button" onClick={shuffleArray}>New game</button>
+          <button type="button" onClick={event => {shuffleArray(); setFalse()}}>New game</button>
           <br/>
         </div>
         <div className= "App-cardContainer">
