@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from "react";
 import "./App.css";
-import Card, {Image, backFace, sourceFront} from "./Card";
+import Card, {Image} from "./Card";
 
 
+
+const sourceFront = "https://api.dicebear.com/7.x/fun-emoji/svg?seed="
 
 const images = [
   {src:sourceFront + "Ginger", id:0},
@@ -38,8 +40,8 @@ function App() {
     images[6],
     images[7],
   ]);
-  const [callCount, setCallCount] = useState(0); // callCount used for count matches. so, if matchCount called for 8 times - you win a game
-  const [pairClicks, setPairClicks] = useState(1);  //pairClicks can't be more then 2, i use it to avoid click on 3rd card
+  const [matchCount, setMatchCount] = useState(0); // callCount used for count matches. so, if matchCount called for 8 times - you win a game
+  const [pairClicks, setPairClicks] = useState(1);  //pairClicks can't be more then 2, to avoid click on 3rd card
   const [totalClicks, setTotalClicks] = useState(1);  // totalClicks used to count how many clicks do user for game
 
 
@@ -77,12 +79,12 @@ function App() {
     console.log('You clicked', totalClicks, 'times') // i use totalClicks to count how many clicks do user for game
   }
 
-  const matchCount = () => {
-    if (callCount <= 7) {
-      setCallCount(callCount + 1);
-      console.log('Match!', callCount+1);
+  const increaseMatchCount = () => {
+    if (matchCount <= 7) {
+      setMatchCount(matchCount + 1);
+      console.log('Match!', matchCount+1);
     }
-    if (callCount === 7) {
+    if (matchCount === 7) {
       alert("You win!");
     }
   };
@@ -90,7 +92,7 @@ function App() {
     setCardState([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]);
     setPairClicks(1);
     setTotalClicks(1);
-    setCallCount(0);
+    setMatchCount(0);
   }
   
   const flipCard = (index: number, state:boolean) => {
@@ -111,18 +113,24 @@ function App() {
 
       if (newState === true && lastCardIndex !== -1 && lastCardIndex !== index) {
         const sameImages = cardImages[lastCardIndex] === cardImages[index];
-            setTimeout(() => {
-              if (!sameImages) {
-                flipCard(lastCardIndex, false);
-                flipCard(index, false); 
-                console.log(backFace)
-              }
-              else{
-                matchCount();
-              }           
-              setLastCardIndex(-1);
-              setPairClicks(1);
-            }, 500);
+        if(sameImages){
+          increaseMatchCount();
+          setTimeout(() => {
+            setLastCardIndex(-1);
+            setPairClicks(1);
+          }, 500);
+        }
+        else{
+          setTimeout(() => {
+            if (!sameImages) {
+              flipCard(lastCardIndex, false);
+              flipCard(index, false); 
+            }         
+            setLastCardIndex(-1);
+            setPairClicks(1);
+          }, 500);
+        }
+            
     }
       
       setLastCardIndex(index);
