@@ -11,9 +11,8 @@ export interface ICardProps {
     onClick: (index:number) => void;
 }
 
-
-
-export const backFace = "https://api.dicebear.com/7.x/shapes/svg?seed=Harley";
+export const sourceFront = "https://api.dicebear.com/7.x/fun-emoji/svg?seed="
+export const backFace ="https://api.dicebear.com/7.x/shapes/svg?seed=Harley";
 
 const Card = (props: ICardProps) => {
     const {state, image, index, onClick} = props;

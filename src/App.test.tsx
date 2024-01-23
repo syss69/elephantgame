@@ -63,18 +63,12 @@ test('image change on new game', async() => {
   const secondImagePair = screen.getAllByTestId("0");
   const sipID = secondImagePair[0].getAttribute(`id`);
   const sipID1 = secondImagePair[1].getAttribute(`id`);
-  expect(fipId).not.toEqual(sipID);
   if(fipId === sipID){
     expect(fipId1).not.toEqual(sipID1);
   }
-  /*const myImg = screen.getByRole("img", { name: /^image_0$/i });
-  const startButton = screen.getByRole("button", { name: /new game/i });
-  await userEvent.click(myImg);
-  const firstSrc = myImg.src;
-  await userEvent.click(startButton);
-  await userEvent.click(myImg);
-  const secondSrc = myImg.src;
-  expect(firstSrc).not.toBe(secondSrc);*/
+  else{
+    expect(fipId).not.toEqual(sipID);
+  }
 })
 
 

@@ -1,18 +1,18 @@
 import React, {useState, useEffect} from "react";
 import "./App.css";
-import Card, {Image} from "./Card";
+import Card, {Image, backFace, sourceFront} from "./Card";
 
 
 
 const images = [
-  {src:"https://api.dicebear.com/7.x/fun-emoji/svg?seed=Ginger", id:0},
-  {src:"https://api.dicebear.com/7.x/fun-emoji/svg?seed=Cleo", id:1},
-  {src:"https://api.dicebear.com/7.x/fun-emoji/svg?seed=Mittens", id:2},
-  {src:"https://api.dicebear.com/7.x/fun-emoji/svg?seed=Charlie", id:3},
-  {src:"https://api.dicebear.com/7.x/fun-emoji/svg?seed=Lucy", id:4},
-  {src:"https://api.dicebear.com/7.x/fun-emoji/svg?seed=Rascal", id:5},
-  {src:"https://api.dicebear.com/7.x/fun-emoji/svg?seed=Snowball", id:6},
-  {src:"https://api.dicebear.com/7.x/fun-emoji/svg?seed=Jack", id:7},
+  {src:sourceFront + "Ginger", id:0},
+  {src:sourceFront + "Cleo", id:1},
+  {src:sourceFront + "Mittens", id:2},
+  {src:sourceFront + "Charlie", id:3},
+  {src:sourceFront + "Lucy", id:4},
+  {src:sourceFront + "Rascal", id:5},
+  {src:sourceFront + "Snowball", id:6},
+  {src:sourceFront + "Jack", id:7},
 ]
 
 
@@ -38,9 +38,9 @@ function App() {
     images[6],
     images[7],
   ]);
-  const [callCount, setCallCount] = useState(0);
-  const [clicks, setClicks] = useState(1);  //clicks can't be more then 2, i use it to avoid click on 3rd card
-  const [clicks1, setClicks1] = useState(1);  // clicks1 used to count how many clicks do user for game
+  const [callCount, setCallCount] = useState(0); // callCount used for count matches. so, if matchCount called for 8 times - you win a game
+  const [pairClicks, setPairClicks] = useState(1);  //pairClicks can't be more then 2, i use it to avoid click on 3rd card
+  const [totalClicks, setTotalClicks] = useState(1);  // totalClicks used to count how many clicks do user for game
 
 
   const buildCard = (index: number, image: Image) => {
@@ -68,13 +68,13 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // executes on 'mount'
 
-  const incrementingClick = () => { //i use clicks to avoid click on 3rd card
-    setClicks(clicks + 1);
+  const incrementingPairClick = () => { //i use PairClicks to avoid click on 3rd card
+    setPairClicks(pairClicks + 1);
   }
  
-  const incrementingClick1 = () => {
-    setClicks1(clicks1 + 1);
-    console.log('You clicked', clicks1, 'times') // i use clicks1 to count how many clicks do user for game
+  const incrementingTotalClick = () => {
+    setTotalClicks(totalClicks + 1);
+    console.log('You clicked', totalClicks, 'times') // i use totalClicks to count how many clicks do user for game
   }
 
   const matchCount = () => {
@@ -86,9 +86,11 @@ function App() {
       alert("You win!");
     }
   };
-
-  const setFalse = () => {
+  const newGame = () => {
     setCardState([false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]);
+    setPairClicks(1);
+    setTotalClicks(1);
+    setCallCount(0);
   }
   
   const flipCard = (index: number, state:boolean) => {
@@ -101,9 +103,9 @@ function App() {
 
 
   const onCardClick = (index: number) => {
-    if (cardState[index] !== true && clicks < 3){
-      incrementingClick();
-      incrementingClick1();
+    if (cardState[index] !== true && pairClicks < 3){
+      incrementingTotalClick();
+      incrementingPairClick();
       const newState = !cardState[index];
       flipCard(index, newState);
 
@@ -113,13 +115,14 @@ function App() {
               if (!sameImages) {
                 flipCard(lastCardIndex, false);
                 flipCard(index, false); 
+                console.log(backFace)
               }
               else{
                 matchCount();
               }           
               setLastCardIndex(-1);
-              setClicks(1);
-          }, 500);
+              setPairClicks(1);
+            }, 500);
     }
       
       setLastCardIndex(index);
@@ -136,7 +139,7 @@ function App() {
         </header>
         <div>
           <br/>
-          <button type="button" onClick={event => {shuffleArray(); setFalse()}}>New game</button>
+          <button type="button" onClick={event => {shuffleArray(); newGame()}}>New game</button>
           <br/>
         </div>
         <div className= "App-cardContainer">
