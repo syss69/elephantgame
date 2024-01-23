@@ -113,3 +113,10 @@ test('Flip  more than 2 cards is prohibited', async() => {
   expect(myImg2.src).toBe(backFace);
 })
  
+test('Timer works', async()=> {
+  render(<App/>);
+  const timerBefore = screen.getByRole("p");
+  const myImg0 = screen.getByRole("img", { name: /^image_0$/i });
+  await userEvent.click(myImg0);
+  setTimeout
+})
