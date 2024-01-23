@@ -4,17 +4,17 @@ import Card, {Image} from "./Card";
 
 
 
-const sourceFront = "https://api.dicebear.com/7.x/fun-emoji/svg?seed="
+const sourceFront = "https://api.dicebear.com/7.x/fun-emoji/svg?seed=";
 
 const images = [
-  {src:sourceFront + "Ginger", id:0},
-  {src:sourceFront + "Cleo", id:1},
-  {src:sourceFront + "Mittens", id:2},
-  {src:sourceFront + "Charlie", id:3},
-  {src:sourceFront + "Lucy", id:4},
-  {src:sourceFront + "Rascal", id:5},
-  {src:sourceFront + "Snowball", id:6},
-  {src:sourceFront + "Jack", id:7},
+  {src:`${sourceFront}Ginger`, id:0},   //same as sourceFront + "Ginger"
+  {src:`${sourceFront}Cleo`, id:1},
+  {src:`${sourceFront}Mittens`, id:2},
+  {src:`${sourceFront}Charlie`, id:3},
+  {src:`${sourceFront}Lucy`, id:4},
+  {src:`${sourceFront}Rascal`, id:5},
+  {src:`${sourceFront}Snowball`, id:6},
+  {src:`${sourceFront}Jack`, id:7},
 ]
 
 
