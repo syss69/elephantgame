@@ -122,10 +122,8 @@ function App() {
         }
         else{
           setTimeout(() => {
-            if (!sameImages) {
               flipCard(lastCardIndex, false);
-              flipCard(index, false); 
-            }         
+              flipCard(index, false);     
             setLastCardIndex(-1);
             setPairClicks(1);
           }, 500);
