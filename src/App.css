@@ -11,10 +11,21 @@
   font-size: calc(10px + 2vmin);
   background-color: #282c34;
   color: aqua;
+  font-size: 30px;
 }
 
   img {
     border:5px solid black;
     margin: 1rem;
 }
+
+  p{
+    font-size: 20px;
+  }
+
+  .select-div{
+    margin: auto;
+    width: 15%;
+  }
+
 
