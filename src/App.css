@@ -14,18 +14,16 @@
   font-size: 30px;
 }
 
-  img {
-    border:5px solid black;
-    margin: 1rem;
+img {
+  border: 5px solid black;
+  margin: 1rem;
 }
 
-  p{
-    font-size: 20px;
-  }
+p {
+  font-size: 20px;
+}
 
-  .select-div{
-    margin: auto;
-    width: 15%;
-  }
-
-
+.select-div {
+  margin: auto;
+  width: 15%;
+}
