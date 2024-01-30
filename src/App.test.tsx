@@ -109,11 +109,11 @@ test("Flip  more than 2 cards is prohibited", async () => {
 
 test("Changing the number of cards", async () => {
   render(<App/>);
-  const imgTagsBefore = screen.getAllByRole("img");
-  const amountImgTags = imgTagsBefore.length;
+  const amountImgTags = screen.getAllByRole("img").length;
   const pairSelector = screen.getByRole('combobox', { name: /pairs/i });
   await userEvent.click(pairSelector);
   await userEvent.click(screen.getByRole('option', { name: /12 pairs/i }));
   const imgTagsAfter = screen.getAllByRole("img");
-  expect(amountImgTags).not.toBe(imgTagsAfter.length)
+  expect(amountImgTags).not.toBe(imgTagsAfter.length);
+  expect(imgTagsAfter.length).toBe(24);
 })
