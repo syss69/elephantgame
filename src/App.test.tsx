@@ -107,10 +107,13 @@ test("Flip  more than 2 cards is prohibited", async () => {
   expect(myImg2.src).toBe(backFace);
 });
 
-/*test('Timer works', async()=> {
+test("Changing the number of cards", async () => {
   render(<App/>);
-  const timerBefore = screen.getByRole("p");
-  const myImg0 = screen.getByRole("img", { name: /^image_0$/i });
-  await userEvent.click(myImg0);
-  setTimeout
-})*/
+  const imgTagsBefore = screen.getAllByRole("img");
+  const amountImgTags = imgTagsBefore.length;
+  const pairSelector = screen.getByRole('combobox', { name: /pairs/i });
+  await userEvent.click(pairSelector);
+  await userEvent.click(screen.getByRole('option', { name: /12 pairs/i }));
+  const imgTagsAfter = screen.getAllByRole("img");
+  expect(amountImgTags).not.toBe(imgTagsAfter.length)
+})

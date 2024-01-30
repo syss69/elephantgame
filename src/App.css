@@ -26,4 +26,6 @@ p {
 .select-div {
   margin: auto;
   width: 15%;
+  display: flex;
+  gap: 1rem;
 }
