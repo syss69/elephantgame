@@ -92,9 +92,14 @@ function App() {
     remainingTime: 30,
   });
   const [timerId, setTimerId] = useState<NodeJS.Timeout>();
+  const [bestScore, setBestScore] = useState(0);
 
   useEffect(() => {
     shuffleArray();
+    const bestScore = localStorage.getItem('bestscore');
+    if(bestScore !== null){
+      setBestScore(parseInt(bestScore))
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // executes on 'mount'
 
@@ -202,14 +207,23 @@ function App() {
 
   const winGame = () => {
     stopTimer();
-    const score = timer.remainingTime * 100;
+    let score = timer.remainingTime * 100;
     if (totalClicks <= pairs * 4.5) {
       alert(
         `You win! Your score is ${score}+ bonus 50 points. Your total score is ${score + 50}`,
       );
-    } else {
-      alert(`You win! Your score is ${score} without any bonus points:(`);
+      score += 50;
     }
+    else {
+      alert(`You win! Your score is ${score} without any bonus points:(`);
+    } 
+    if (bestScore !== null){
+        if (bestScore < score){
+          setBestScore(score)
+          localStorage.setItem('bestscore', score.toString());
+    }
+    }
+    console.log(localStorage.getItem('bestscore'))
   };
 
   const loseGame = () => {
@@ -321,6 +335,9 @@ function App() {
 
         <p id="timer">{`Only ${timer.remainingTime} seconds left!`}</p>
       </div>
+      <p>
+      {(bestScore && bestScore !== 0) ? `Your best score is ${bestScore}` : null}    
+      </p>
       <div className="App-cardContainer">
         <Box sx={{ width: "100%" }}>{buildCards()}</Box>
       </div>
