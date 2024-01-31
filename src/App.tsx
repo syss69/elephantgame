@@ -257,11 +257,15 @@ function App() {
 
   const handleChangeTimer = (event: SelectChangeEvent) => {
     const selectedValue = parseInt(event.target.value, 10);
+    stopTimer();
     setTimer({ maxTime: selectedValue, remainingTime: selectedValue });
   };
 
   const handleChangePairs = (event: SelectChangeEvent) => {
     const selectedValue = parseInt(event.target.value, 10);
+    setPairClicks(1);
+    setTotalClicks(1);
+    setMatchCount(0);
     setCardImages(
       shuffle(fullCardArray.slice(0, selectedValue*2))
     );
