@@ -85,8 +85,8 @@ function App() {
     fullCardArray.slice(0, pairs*2)
   );
   const [matchCount, setMatchCount] = useState(0); // used to count matches. so, if matchCount called for 8 times - you win a game
-  const [pairClicks, setPairClicks] = useState(1); //pairClicks can't be more then 2, to avoid click on 3rd card
-  const [totalClicks, setTotalClicks] = useState(1); // totalClicks used to count how many clicks is done by the user
+  const [pairClicks, setPairClicks] = useState(0); //pairClicks can't be more then 2, to avoid click on 3rd card
+  const [totalClicks, setTotalClicks] = useState(0); // totalClicks used to count how many clicks is done by the user
   const [timer, setTimer] = useState<GameTimer>({
     maxTime: 30,
     remainingTime: 30,
@@ -169,7 +169,7 @@ function App() {
 
   const incrementingTotalClick = () => {
     setTotalClicks(totalClicks + 1);
-    console.log("You clicked", totalClicks, "times"); // totalClicks is used to count how many clicks do user for game
+    console.log("You clicked", totalClicks + 1, "times"); // totalClicks is used to count how many clicks do user for game
   };
 
   const increaseMatchCount = () => {
@@ -185,8 +185,8 @@ function App() {
 
   const newGame = () => {
     initCardState(false);
-    setPairClicks(1);
-    setTotalClicks(1);
+    setPairClicks(0);
+    setTotalClicks(0);
     setMatchCount(0);
     stopTimer();
     shuffleArray();
@@ -223,7 +223,7 @@ function App() {
     if (!timerId && matchCount !== pairs) {
       startTimer();
     }
-    if (cardState[index] !== true && pairClicks < 3) {
+    if (cardState[index] !== true && pairClicks < 2) {
       incrementingTotalClick();
       incrementingPairClick();
       const newState = !cardState[index];
@@ -239,14 +239,14 @@ function App() {
           setTimeout(() => {
             increaseMatchCount();
             setLastCardIndex(-1);
-            setPairClicks(1);
+            setPairClicks(0);
           }, 100);
         } else {
           setTimeout(() => {
             flipCard(lastCardIndex, false);
             flipCard(index, false);
             setLastCardIndex(-1);
-            setPairClicks(1);
+            setPairClicks(0);
           }, 500);
         }
       }
@@ -257,11 +257,15 @@ function App() {
 
   const handleChangeTimer = (event: SelectChangeEvent) => {
     const selectedValue = parseInt(event.target.value, 10);
+    stopTimer();
     setTimer({ maxTime: selectedValue, remainingTime: selectedValue });
   };
 
   const handleChangePairs = (event: SelectChangeEvent) => {
     const selectedValue = parseInt(event.target.value, 10);
+    setPairClicks(0);
+    setTotalClicks(0);
+    setMatchCount(0);
     setCardImages(
       shuffle(fullCardArray.slice(0, selectedValue*2))
     );
