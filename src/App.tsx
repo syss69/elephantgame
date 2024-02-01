@@ -94,6 +94,7 @@ function App() {
   const [timerId, setTimerId] = useState<NodeJS.Timeout>();
   const [bestScore, setBestScore] = useState(0);
 
+
   useEffect(() => {
     shuffleArray();
     const bestScore = localStorage.getItem('bestscore');
@@ -125,7 +126,6 @@ function App() {
   const buildCards = () => {
     const cards: JSX.Element[] = [];
     let cardInRow = 0;
-    //console.log(`Number of images: ${cardImages.length}`);
     for (let p = 0; p < pairs * 2; ++p) {
       const currentImage = cardImages[p];
       cards.push(buildCard(p, currentImage));
@@ -206,24 +206,8 @@ function App() {
   };
 
   const winGame = () => {
+    scoreCount();
     stopTimer();
-    let score = timer.remainingTime * 100;
-    if (totalClicks <= pairs * 4.5) {
-      alert(
-        `You win! Your score is ${score}+ bonus 50 points. Your total score is ${score + 50}`,
-      );
-      score += 50;
-    }
-    else {
-      alert(`You win! Your score is ${score} without any bonus points:(`);
-    } 
-    if (bestScore !== null){
-        if (bestScore < score){
-          setBestScore(score)
-          localStorage.setItem('bestscore', score.toString());
-    }
-    }
-    console.log(localStorage.getItem('bestscore'))
   };
 
   const loseGame = () => {
@@ -232,6 +216,59 @@ function App() {
     // show answer
     initCardState(true);
   };
+
+  const calculateScore = (timerBonus: number, clickBonus: number, pairsBonus: number): number => {
+    let score = timer.remainingTime * timerBonus * pairsBonus;
+  
+    if (totalClicks <= pairs * 4.5) {
+      const lastScore = score + clickBonus;
+      alert(`You win! Your score is ${score}+ bonus ${clickBonus} points. Your total score is ${lastScore}`);
+      score = lastScore;
+    } 
+    else {
+      alert(`You win! Your score is ${score} without any bonus points:(`);
+    }
+    return score;
+  };
+  
+  const scoreCount = () => {
+    let timerBonus: number = 0;
+  
+    if (timer.maxTime === 30) {
+      timerBonus = 100;
+    } 
+    else if (timer.maxTime === 40) {
+      timerBonus = 50;   
+    } 
+    else if (timer.maxTime === 50) {
+      timerBonus = 33;
+    }
+    let pairsBonus: number = 0;
+    let clickBonus: number = 0;
+    
+    if (pairs === 8){
+      pairsBonus = 1;
+      clickBonus = 50;
+    } 
+    else if (pairs === 10){
+      pairsBonus = 1.5;
+      clickBonus = 100;
+    }
+    else if(pairs === 12){
+      pairsBonus =2;
+      clickBonus = 150;
+    }
+  
+    const score: number = calculateScore(timerBonus, clickBonus, pairsBonus);
+    console.log(`Score - ${score}, timerBonus - 0.${timerBonus}, clickBonus${clickBonus}, pairsBonus ${pairsBonus}`)
+    if (bestScore !== null && bestScore < score) {
+      setBestScore(score);
+      localStorage.setItem('bestscore', score.toString());
+
+    }
+  
+  };
+  
 
   const onCardClick = (index: number) => {
     if (!timerId && matchCount !== pairs) {
