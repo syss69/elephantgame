@@ -92,9 +92,15 @@ function App() {
     remainingTime: 30,
   });
   const [timerId, setTimerId] = useState<NodeJS.Timeout>();
+  const [bestScore, setBestScore] = useState(0);
+
 
   useEffect(() => {
     shuffleArray();
+    const bestScore = localStorage.getItem('bestscore');
+    if(bestScore !== null){
+      setBestScore(parseInt(bestScore))
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // executes on 'mount'
 
@@ -120,7 +126,6 @@ function App() {
   const buildCards = () => {
     const cards: JSX.Element[] = [];
     let cardInRow = 0;
-    //console.log(`Number of images: ${cardImages.length}`);
     for (let p = 0; p < pairs * 2; ++p) {
       const currentImage = cardImages[p];
       cards.push(buildCard(p, currentImage));
@@ -201,15 +206,8 @@ function App() {
   };
 
   const winGame = () => {
+    scoreCount();
     stopTimer();
-    const score = timer.remainingTime * 100;
-    if (totalClicks <= pairs * 4.5) {
-      alert(
-        `You win! Your score is ${score}+ bonus 50 points. Your total score is ${score + 50}`,
-      );
-    } else {
-      alert(`You win! Your score is ${score} without any bonus points:(`);
-    }
   };
 
   const loseGame = () => {
@@ -218,6 +216,63 @@ function App() {
     // show answer
     initCardState(true);
   };
+
+  const calculateScore = (timerBonus: number, clickBonus: number, pairsBonus: number): number => {
+    let score = timer.remainingTime * timerBonus * pairsBonus;
+  
+    if (totalClicks <= pairs * 4.5) {
+      const lastScore = score + clickBonus;
+      alert(`You win! Your score is ${score}+ bonus ${clickBonus} points. Your total score is ${lastScore}`);
+      score = lastScore;
+    } 
+    else {
+      alert(`You win! Your score is ${score} without any bonus points:(`);
+    }
+    return score;
+  };
+  
+  const scoreCount = () => {
+    let timerBonus: number = 0;
+
+    switch(true){
+      case timer.maxTime === 30:
+        timerBonus = 100;
+        break;
+      case timer.maxTime === 40:
+        timerBonus = 50;
+        break;
+      case timer.maxTime === 50:
+        timerBonus = 33;
+        break;
+    }
+    let pairsBonus: number = 0;
+    let clickBonus: number = 0;
+
+    switch(true){
+      case pairs === 8:
+        pairsBonus = 1;
+        clickBonus = 50;
+        break;
+      case pairs === 10:
+        pairsBonus = 2;
+        clickBonus = 150;
+        break;
+      case pairs === 12:
+        pairsBonus = 3;
+        clickBonus = 250;
+        break;
+    }
+  
+    const score: number = calculateScore(timerBonus, clickBonus, pairsBonus);
+    console.log(`Score - ${score}, timerBonus - 0.${timerBonus}, clickBonus${clickBonus}, pairsBonus ${pairsBonus}`)
+    if (bestScore !== null && bestScore < score) {
+      setBestScore(score);
+      localStorage.setItem('bestscore', score.toString());
+
+    }
+  
+  };
+  
 
   const onCardClick = (index: number) => {
     if (!timerId && matchCount !== pairs) {
@@ -321,6 +376,9 @@ function App() {
 
         <p id="timer">{`Only ${timer.remainingTime} seconds left!`}</p>
       </div>
+      <p>
+      {(bestScore && bestScore !== 0) ? `Your best score is ${bestScore}` : null}    
+      </p>
       <div className="App-cardContainer">
         <Box sx={{ width: "100%" }}>{buildCards()}</Box>
       </div>
