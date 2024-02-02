@@ -233,30 +233,34 @@ function App() {
   
   const scoreCount = () => {
     let timerBonus: number = 0;
-  
-    if (timer.maxTime === 30) {
-      timerBonus = 100;
-    } 
-    else if (timer.maxTime === 40) {
-      timerBonus = 50;   
-    } 
-    else if (timer.maxTime === 50) {
-      timerBonus = 33;
+
+    switch(true){
+      case timer.maxTime === 30:
+        timerBonus = 100;
+        break;
+      case timer.maxTime === 40:
+        timerBonus = 50;
+        break;
+      case timer.maxTime === 50:
+        timerBonus = 33;
+        break;
     }
     let pairsBonus: number = 0;
     let clickBonus: number = 0;
-    
-    if (pairs === 8){
-      pairsBonus = 1;
-      clickBonus = 50;
-    } 
-    else if (pairs === 10){
-      pairsBonus = 1.5;
-      clickBonus = 100;
-    }
-    else if(pairs === 12){
-      pairsBonus =2;
-      clickBonus = 150;
+
+    switch(true){
+      case pairs === 8:
+        pairsBonus = 1;
+        clickBonus = 50;
+        break;
+      case pairs === 10:
+        pairsBonus = 2;
+        clickBonus = 150;
+        break;
+      case pairs === 12:
+        pairsBonus = 3;
+        clickBonus = 250;
+        break;
     }
   
     const score: number = calculateScore(timerBonus, clickBonus, pairsBonus);
